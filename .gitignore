@@ -2,9 +2,12 @@
 *.env
 Auth/
 Base_Model/
+venv/
+diffusers/ 
 
 *.safetensors
 *.safetensor
+*.ckpt
 
 
 # Byte-compiled / optimized / DLL files
