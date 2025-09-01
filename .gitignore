@@ -4,6 +4,7 @@ Auth/
 Base_Model/
 venv/
 diffusers/ 
+VividOrangeMix/
 
 *.safetensors
 *.safetensor
