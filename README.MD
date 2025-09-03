@@ -48,18 +48,23 @@ Converts all safetensors and/or checkpoint files into local models:
 ```
 python main.py --gen_models=True
 ```
+To use the local models you may invoke the following commands:
+```
+python main.py --model=XXXX --prompt=XXXX
+```
 
 Failing to provide a model from the directory will terrminate the program and return the following:
 ```
 No model selected. Please select a model and re-run application.
 ```
-
 A prompt does NOT need to be provided, but the default prompt is as follows:
 ```
 prompt = "An astronaut ridding a tiger"
 ```
 If you do not want to generate this image, then a new prompt must be provided. 
 
+Additionally, all Text_to_Image  Pipeline parameters are available as commands:
+https://huggingface.co/docs/diffusers/v.35.1/en/api/pipelines/stable_diffusion_text2img#diffusers.StableDiffusionPipeline
 
 
 ## Testing
@@ -67,10 +72,7 @@ If you do not want to generate this image, then a new prompt must be provided.
 For testing this application, I primarily used the VividOrangeMix. 
 You can download the model set from:
 
-```
 https://huggingface.co/WarriorMama777/OrangeMixs
-```
-
 
 ## Lisence
 
