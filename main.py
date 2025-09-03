@@ -4,63 +4,56 @@
 # Import Packages
 import os
 import time
-from datetime import timedelta
 import torch
 from diffusers import StableDiffusionPipeline
 
+# Import Additional Files
+from model_handler import *
+from pipe_image import *
+
 # Declare Variables
-cpath = os.getcwd()
-mfolder = os.path.join(cpath, "models")
-dpath = os.path.join(cpath, "diffusers")
 torch_dtype = torch.float32
 device = "cpu" # Assumed there is no GPU present.
-
-convert_str = "python ./diffusers/scripts/convert_original_stable_diffusion_to_diffusers.py --checkpoint_path {} --dump_path {} {}"
-
-# Check for Models
-
-def model_folder_parter(): # Syntax needs adjustment.
-    try:
-        os.system("mkdir ./diffusers/models")
-    except:
-        pass
-
-def model_converter():
-    model_folder = os.path.join(dpath, "models")
-    for i in os.scandir(mfolder):
-        if i.is_file():
-            md = os.path.basename(i)
-            md_name = md.split(".")[0]
-            ending = md.split(".")[1]
-            tmp_dir = os.path.join(model_folder, md_name)
-            if os.path.isdir(tmp_dir):
-                pass
-            else:
-                if ending == "safetensors":
-                    end_val = "--from_safetensors"
-                else:
-                    end_val = ""
-                md_local = os.path.join(mfolder, md)
-                cstring = convert_str.format(md_local, tmp_dir, end_val)
-                os.system(cstring)
-
-def getModels():
-    dirs = []
-    model_folder = os.path.join(dpath, "models")
-    for i in os.listdir(model_folder):
-      f = os.path.join(model_folder, i)
-      if os.path.isdir(f):
-            dirs.append(i)
-    return dirs
+## Temporary Image Parameters
+width, height = (1024, 1024)
 
 # Declare Functions
+def diffusion_wrapper(model, torch_dtype=torch_dtype, allow_symlinks=False):
+    # Acts as a wrapper function for the normal stable diffusion pipeline
+    pipe = StableDiffusionPipeline.from_pretrained(model, torch_dtype=torch_dtype, local_dir_use_symlinks=allow_symlinks)
+    pipe = pipe.to(device)
+    return pipe
 
-# Generate Images
+# Time Management
+def image_namer():
+    ctime = time.localtime()
+    fstring = "%H_%M_%S"
+    ctime = time.strftime(fstring, ctime)
+    return ctime + ".png"
 
+# Interface 
+
+def start_program(timesteps, sigmas, guidence_scale, negative_prompt, num_images_per_prompt, eta, generator, latents, prompt_embeds, negative_prompt_embeds, ip_adapter_image, ip_adapter_image_embeds, output_type, return_dict, guidence_rescale, clip_skip, callback_on_step_end, callback_on_step_end_tensor_inputs, image_name="", gen_models=False, List_Models=False, Model="", prompt=prompt, height=height, width=width, num_inference_steps=50):
+    # runs the user interface inside main.
+    print("Hello World")
+    if gen_models == True:
+        model_converter()
+    if List_Models == True:
+        models = getModels()
+        if len(models) == 0:
+            print("There are no models available. Please download and convert models.")
+        else:
+            print(models)
+    if not Model: #Probably unnecessary to check again, but better safe than sorry.
+        pipe = diffusion_wrapper(model=Model)
+        image = image_wrapper(pipe=pipe, height=height, width=width, num_inference_steps=num_inference_steps, timesteps=timesteps, sigmas=sigmas, guidence_scale=guidence_scale, negative_prompt=negative_prompt, num_images_per_prompt=num_images_per_prompt, eta=eta, generator=generator, latents=latents, prompt_embeds=prompt_embeds, negative_prompt_embeds=negative_prompt_embeds, ip_adapter_image=ip_adapter_image, ip_adapter_image_embeds=ip_adapter_image_embeds, output_type=output_type, return_dict=return_dict, guidence_rescale=guidence_rescale, clip_skip=clip_skip, callback_on_step_end=callback_on_step_end, callback_on_step_end_tensor_inputs=callback_on_step_end_tensor_inputs, prompt=prompt)
+        if not image_name:
+            name = image_namer()
+            image.save(name)
+    else:
+        print("No model selected. Please select a model and re-run application.")
+        pass
 
 # Run Application
 if __name__ == "__main__":
-    # model_folder_parter()
-    model_converter()
-    models = getModels()
-    print(models)
+    start_program()

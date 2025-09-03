@@ -5,6 +5,7 @@ Base_Model/
 venv/
 diffusers/ 
 VividOrangeMix/
+models/
 
 *.safetensors
 *.safetensor
