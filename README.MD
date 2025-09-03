@@ -38,6 +38,28 @@ As expected, this utility can be invoked from the command line. Generally speaki
 python main.py
 ```
 
+Parameters can be added based on the function one wishes to call:
+
+Lists all models converted into local files from either safetensors or checkpoint files:
+```
+python main.py --list_models=True 
+```
+Converts all safetensors and/or checkpoint files into local models:
+```
+python main.py --gen_models=True
+```
+
+Failing to provide a model from the directory will terrminate the program and return the following:
+```
+No model selected. Please select a model and re-run application.
+```
+
+A prompt does NOT need to be provided, but the default prompt is as follows:
+```
+prompt = "An astronaut ridding a tiger"
+```
+If you do not want to generate this image, then a new prompt must be provided. 
+
 
 
 ## Testing

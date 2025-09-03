@@ -42,7 +42,6 @@ def model_converter():
 def getModels():
     dirs = []
     model_folder = os.path.join(dpath, "models")
-    print(model_folder)
     for i in os.listdir(model_folder):
       f = os.path.join(model_folder, i)
       if os.path.isdir(f):

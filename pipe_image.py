@@ -6,7 +6,7 @@ import os
 from diffusers import StableDiffusionPipeline
 
 # Declare Variables
-prompt = "An astronaut ridding a tigger"
+prompt = "An astronaut ridding a tiger"
 
 # Declare Functions 
 

@@ -44,13 +44,13 @@ def central_program(timesteps, sigmas, guidence_scale, negative_prompt, num_imag
         else:
             print(models)
     elif not Model: #Probably unnecessary to check again, but better safe than sorry.
+        print("No model selected. Please select a model and re-run application.")
+    else:
         pipe = diffusion_wrapper(model=Model)
         image = image_wrapper(pipe=pipe, height=height, width=width, num_inference_steps=num_inference_steps, timesteps=timesteps, sigmas=sigmas, guidence_scale=guidence_scale, negative_prompt=negative_prompt, num_images_per_prompt=num_images_per_prompt, eta=eta, generator=generator, latents=latents, prompt_embeds=prompt_embeds, negative_prompt_embeds=negative_prompt_embeds, ip_adapter_image=ip_adapter_image, ip_adapter_image_embeds=ip_adapter_image_embeds, output_type=output_type, return_dict=return_dict, guidence_rescale=guidence_rescale, clip_skip=clip_skip, callback_on_step_end=callback_on_step_end, callback_on_step_end_tensor_inputs=callback_on_step_end_tensor_inputs, prompt=prompt)
         if not image_name:
             name = image_namer()
             image.save(name)
-    else:
-        print("No model selected. Please select a model and re-run application.")
         
 
 # Interface
@@ -88,4 +88,5 @@ def parse_maker():
 # Run Application
 if __name__ == "__main__":
     args = parse_maker()
+    print(args.model)
     central_program(timesteps=args.timesteps, sigmas=args.sigmas, guidence_scale=args.guidence_scale, negative_prompt=args.negative_prompt, num_images_per_prompt=args.num_images_per_prompt, eta=args.eta, generator=args.generator, latents=args.latents, prompt_embeds=args.prompt_embeds, negative_prompt_embeds=args.negative_prompt_embeds, ip_adapter_image=args.ip_adapter_image, ip_adapter_image_embeds=args.ip_adapter_image_embeds, output_type=args.output_type, return_dict=args.return_dict, guidence_rescale=args.guidence_rescale, clip_skip=args.clip_skip, callback_on_step_end=args.callback_on_step_end, callback_on_step_end_tensor_inputs=args.callback_on_step_end_tensor_inputs, image_name=args.image_name, gen_models=args.gen_models, List_Models=args.list_models, Model=args.model, prompt=args.prompt, height=args.height, width=args.width, num_inference_steps=args.num_inference_steps)
