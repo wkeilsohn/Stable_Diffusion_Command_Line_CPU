@@ -24,7 +24,7 @@ Additionally, you MAY need to download and install conda from the Anaconda websi
 
 After you have installed the required packages and supporting applications, please place your .safetensor file in the <b> models </b> folder. Checkpoint files in the .safetensor format can either be downloaded from Hugging Face or from Civitai. 
 
-You can use the more standard .ckpt file format as well, but at this time you must invoke the diffusers application directly. 
+You can use the more standard .ckpt file format as well.
 
 ```
 https:\\github.com\haofanwang\Lora-for-Diffusers
@@ -32,7 +32,11 @@ https:\\github.com\haofanwang\Lora-for-Diffusers
 
 ## Use
 
-As expected, this utility can be invoked from the command line. 
+As expected, this utility can be invoked from the command line. Generally speaking every invocation uses the standard python main.py run command:
+
+```
+python main.py
+```
 
 
 
